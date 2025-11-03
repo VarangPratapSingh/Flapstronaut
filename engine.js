@@ -4,8 +4,8 @@ let SpacePanel = document.getElementById('GameDisplay');
 let pos = parseInt(getComputedStyle(Astronaut).bottom);
 
 //Variables For Initialising Gravity,Velocity And Jump (ie Increase In Velocity Due To Jump)
-let velocity=0;
-let gravity=0.4;
+let velocity=10;
+let gravity=0.3;
 let jump=10;
 
 let currentscore=0; //Initial Score
@@ -35,7 +35,7 @@ document.getElementById('Restart').addEventListener('click',(e)=>{
 
 //Game Starting Function (Calling The Variables And Necessary Functions)
 function startgame(){
-    debrisID=setInterval(createdebris); //Ammount Of Time In Which Next Row Will Be Made
+    debrisID=setInterval(createdebris,(2200)); //Ammount Of Time In Which Next Row Will Be Made
     movedebris();
     main();
     movebg();
@@ -84,9 +84,8 @@ function main(){
 
 //Astronaut Jump (Suddenly Increasing The Velocity Making It Positive)
 SpacePanel.addEventListener('click',()=>{
-    velocity+=jump;
-    //Max Jumping Threshold
-    if (velocity>jump){velocity=jump;}
+    //Jumping To Increase Velocity
+    velocity=jump;
 });
 
 //Space Movement (Movement Of Background Based On Reducing X Axis Ensuring Image Is Repeating)
@@ -99,7 +98,7 @@ function movebg(){
 //Creating Obstacles
 function createdebris(){
     //Random Number Of Debris Per Row
-    let numberofdebris=Math.floor(Math.random()*3)+1;
+    let numberofdebris=Math.floor(Math.random()*2)+1;
     for (let i=0;i<numberofdebris;i++){
         //For Each Debris Add ClassList Of Rocks ie Debris
         let debry=document.createElement('div');

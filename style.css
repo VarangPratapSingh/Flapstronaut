@@ -41,6 +41,14 @@ body {
     background-position: center;
     width: 40px;
     height: 40px;
+    /* Makes The Debris Roll */
+    animation: spin 1s linear infinite;
+}
+
+/* Makes The Debris Roll */
+@keyframes spin {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
 }
 
 #HighScore {
