@@ -27,9 +27,19 @@ document.getElementById('Start').addEventListener('click',(e)=>{
     document.getElementById('Start').remove();
 });
 
-//Restart Game After Game Over By Reloading Page
+//Restart Game After Game Over By Reinitialising Everything To The Way It Was
 document.getElementById('Restart').addEventListener('click',(e)=>{
-    location.reload();
+    e.stopPropagation();
+    gamestop();
+    pos=400;
+    velocity=6;
+    currentscore=0;
+    document.getElementById('Score').textContent='Current Score: 0';
+    document.getElementById('Restart').style.opacity=0;
+    document.getElementById('Restart').style.pointerEvents='none';
+    Astronaut.style.opacity='1';
+    Astronaut.style.bottom=pos+'px';
+    startgame();
 });
 
 //Game Starting Function (Calling The Variables And Necessary Functions)
@@ -58,7 +68,7 @@ function gamestop(){
     document.getElementById('HighScore').textContent=`High Score: ${highscore}`;
     document.getElementById('Score').textContent=`Current Score: ${currentscore}`;
     //Removes Astronaut And Debris From Space
-    Astronaut.remove();
+    Astronaut.style.opacity='0';
     debris.forEach(deb=>deb.remove());
     debris=[];
     //Show Restart Button
@@ -139,7 +149,7 @@ function collision(){
     for (let deb of debris){
         let DebrisPosition = deb.getBoundingClientRect();
         //Checks If The Astronaut And Debris Collide
-        if (AstronautPosition.left<DebrisPosition.left+DebrisPosition.width-5 && AstronautPosition.left+AstronautPosition.width>DebrisPosition.left+5 && AstronautPosition.top<DebrisPosition.top+DebrisPosition.height-5 && AstronautPosition.top+AstronautPosition.height>DebrisPosition.top+5){gamestop();}
+        if (AstronautPosition.left<DebrisPosition.left+DebrisPosition.width-10 && AstronautPosition.left+AstronautPosition.width>DebrisPosition.left+10 && AstronautPosition.top<DebrisPosition.top+DebrisPosition.height-10 && AstronautPosition.top+AstronautPosition.height>DebrisPosition.top+10){gamestop();}
     }
     requestAnimationFrame(collision);
 }
