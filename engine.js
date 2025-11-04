@@ -4,15 +4,14 @@ let SpacePanel = document.getElementById('GameDisplay');
 let pos = parseInt(getComputedStyle(Astronaut).bottom);
 
 //Variables For Initialising Gravity,Velocity And Jump (ie Increase In Velocity Due To Jump)
-let velocity=10;
-let gravity=0.3;
-let jump=10;
+let velocity=6;
+let gravity=0.1;
+let jump=document.documentElement.clientHeight/130;
 
 let currentscore=0; //Initial Score
 let highscore=parseInt(localStorage.getItem('highscore'))||0; //Highest Score
 let bgm=0; //Initial Background Position ie 0px
 let debris = []; //Array For A Row Of Debris
-let DebrisSpeed = Math.min(8,Math.max(4,document.documentElement.clientWidth/800*2)); //Ensures That Debris Is Moving At Proper Speed For All Displays
 //Ids To Stop Recursion Of The Functions (All Mentioned Below)
 let debrisID,movebgID,mainID,movedebrisID,collisionID;
 
@@ -123,8 +122,7 @@ function movedebris(){
     for (let i=debris.length-1;i>=0;i--){
         let deb=debris[i];
         let leftpos=parseInt(deb.style.left);
-        //Debris Moving According To Display Size Set ABove
-        leftpos-=DebrisSpeed;
+        leftpos-=2;
         deb.style.left=leftpos+'px';
         //Debris Removal After Reaching 0px
         if (leftpos<=-40){
