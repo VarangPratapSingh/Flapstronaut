@@ -8,6 +8,7 @@ let velocity=6;
 let gravity=0.1;
 let jump=document.documentElement.clientHeight/130;
 
+let multiplier=1; //Game Difficulty Setter
 let currentscore=0; //Initial Score
 let highscore=parseInt(localStorage.getItem('highscore'))||0; //Highest Score
 let bgm=0; //Initial Background Position ie 0px
@@ -99,7 +100,7 @@ SpacePanel.addEventListener('click',()=>{
 
 //Space Movement (Movement Of Background Based On Reducing X Axis Ensuring Image Is Repeating)
 function movebg(){
-    bgm-=1.8; //Framepace Of Background Movement
+    bgm-=1.8*(0.5*multiplier); //Framepace Of Background Movement Scales With Multiplier
     document.getElementById('GameDisplay').style.backgroundPositionX = bgm + 'px';
     movebgID=requestAnimationFrame(movebg);
 }
@@ -108,6 +109,7 @@ function movebg(){
 function createdebris(){
     //Random Number Of Debris Per Row
     let numberofdebris=Math.floor(Math.random()*2)+1;
+    if (currentscore>500){numberofdebris++;}
     for (let i=0;i<numberofdebris;i++){
         //For Each Debris Add ClassList Of Rocks ie Debris
         let debry=document.createElement('div');
@@ -132,7 +134,7 @@ function movedebris(){
     for (let i=debris.length-1;i>=0;i--){
         let deb=debris[i];
         let leftpos=parseInt(deb.style.left);
-        leftpos-=2;
+        leftpos-=2*(0.5*multiplier);
         deb.style.left=leftpos+'px';
         //Debris Removal After Reaching 0px
         if (leftpos<=-40){
@@ -158,10 +160,15 @@ function collision(){
 function scorecalc(){
     //Increases Score Per 600ms And Constantly Sets Highscore If CurrentScrore Exceeded The HighScore
     scoreinter=setInterval(()=>{
-        currentscore++;
+        currentscore+=multiplier;
+        //Increases Game Difficulty
+        if (currentscore%100===0 && currentscore!==0){
+            gravity+=0.01;
+            multiplier++;
+        }
         highscore=Math.max(highscore,currentscore);
         localStorage.setItem('highscore',highscore);
         document.getElementById('HighScore').textContent=`High Score: ${highscore}`;
         document.getElementById('Score').textContent=`Current Score: ${currentscore}`;
-    },600);
+    },500);
 }
