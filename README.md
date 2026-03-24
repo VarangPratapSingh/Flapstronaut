@@ -6,3 +6,4 @@ Features To Add In Future:- Leaderboards
 Hosted On flapstronaut.gamer.gd
 
 In Latest Release Difficulty Increases With Time, You Also Gain Score Faster
+ 
